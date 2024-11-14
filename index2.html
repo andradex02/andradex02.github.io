@@ -1,59 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chart MySQL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style2.css">
+    <title>Portafolio Website</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">Renova Tec</a>
 
-    <style>        
+        <nav>
+            <a href="index.html" class="active"> Inicio </a>
+            <a href="#" >Servicios </a>
+            <a href="#" >Habilidades</a>
+            <a href="#" >Educación</a>
+            <a href="#" >Experiencia</a>
+            <a href="mailto: renovatec00@gmail.com?subject=Asunto%20del%20mensaje&body=Contenido%20del%20mensaje">Contacto</a>
+        </nav>
+    </header>
+    <section class="home">
+        <div class="home-img">
+            <img src="main.jpg" alt="">
+        </div>
+        <div class="home-content">
+            <h1>Hola, Nosotros somos <span>Renova Tec</span></h1>
+            <h3 class="typing-text">Somos <span></span></h3>
+            <p>Si el cliente es muy inteligente, podrá conseguir el resultado deseado.</p>
+
+            
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsualización</title>
+    <style>
+        iframe {
+            width: 100%;
+            height: 600px; /* Ajusta la altura según sea necesario */
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
+
+<h1>Listado de sensores</h1>
+<iframe src="http://localhost/renovatec/index.php" title="Previsualización"></iframe>
+</body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Previsualización</title>
+  <style>
+      iframe {
+          width: 100%;
+          height: 600px; /* Ajusta la altura según sea necesario */
+          border: 1px solid #ccc;
+      }
+  </style>
+</head>
+<body>
+
+<h1>Lecturas en tiempo real</h1>
+<iframe src="http://localhost/renovatec/inicio.php?controller=lectura&action=list" title="Previsualización"></iframe>
+
+</body>
+                
+              
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-gmail"></i></a>
+            </div>
+            
+        </div>
+    </section>
     
-    <canvas id="myChart" style="position: relative; height: 40vh; width: 80vw;"></canvas>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        var ctx = document.getElementById('myChart')
-        var myChart = new Chart(ctx, {
-            type:'bar',
-            data:{
-                datasets: [{
-                    label: 'Stock de Productos',
-                    backgroundColor: ['#6bf1ab','#63d69f', '#438c6c', '#509c7f', '#1f794e', '#34444c', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#0D47A1'],
-                    borderColor: ['black'],
-                    borderWidth:1
-                }]
-            },
-            options:{
-                scales:{
-                    y:{
-                        beginAtZero:true
-                    }
-                }
-            }
-        })
-
-        let url = 'http://localhost/apirest/articulos.php'
-        fetch(url)
-            .then( response => response.json() )
-            .then( datos => mostrar(datos) )
-            .catch( error => console.log(error) )
-
-
-        const mostrar = (articulos) =>{
-            articulos.forEach(element => {
-                myChart.data['labels'].push(element.descripcion)
-                myChart.data['datasets'][0].data.push(element.stock)
-                myChart.update()
-            });
-            console.log(myChart.data)
-        }    
-
-
-
-    </script>
 </body>
 </html>
