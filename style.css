@@ -31,6 +31,7 @@ header .menu{
     justify-content: center;
     gap: 20px;
     font-weight: 500;
+    color: white;
 }
 /* css slider */
 .slider{
