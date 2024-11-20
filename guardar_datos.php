@@ -1,36 +1,22 @@
 <?php
-// Configuración de la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "sensores"; // Nombre de tu base de datos
+// Configura las variables para recibir los datos
+$temp = $_GET['temp'] ?? null;
+$hum = $_GET['hum'] ?? null;
+$viento = $_GET['viento'] ?? null;
+$lluvia = $_GET['lluvia'] ?? null;
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+// Guarda los datos en un archivo o base de datos
+$datosArchivo = "datos.txt";
+if ($temp && $hum && $viento && $lluvia) {
+    $linea = date("Y-m-d H:i:s") . ", Temp: $temp°C, Hum: $hum%, Viento: $viento km/h, Lluvia: $lluvia mm\n";
+    file_put_contents($datosArchivo, $linea, FILE_APPEND);
 }
 
-// Verificar si se recibieron los datos mediante GET
-if (isset($_GET['cod_sensor']) && isset($_GET['lectura']) && isset($_GET['fecha'])) {
-    $cod_sensor = intval($_GET['cod_sensor']); // Convertir a entero para mayor seguridad
-    $lectura = htmlspecialchars($_GET['lectura']); // Limpiar para evitar inyecciones
-    $fecha = $_GET['fecha'];
-
-    // Insertar datos en la tabla "lectura"
-    $sql = "INSERT INTO lectura (cod_sensor, lectura, fecha) VALUES ('$cod_sensor', '$lectura', '$fecha')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Datos guardados correctamente.";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+// Muestra los datos almacenados
+if (file_exists($datosArchivo)) {
+    $contenido = file_get_contents($datosArchivo);
+    echo nl2br($contenido);
 } else {
-    echo "Faltan parámetros en la solicitud.";
+    echo "No hay datos disponibles.";
 }
-
-// Cerrar la conexión
-$conn->close();
 ?>
