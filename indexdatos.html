@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estación Meteorológica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        .contenedor {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #datos {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .recargar {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .recargar:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        async function actualizarDatos() {
+            try {
+                const response = await fetch("guardar_datos.php");
+                const data = await response.text();
+                document.getElementById("datos").innerHTML = data;
+            } catch (error) {
+                console.error("Error al cargar los datos:", error);
+                document.getElementById("datos").innerHTML = "Error al cargar los datos.";
+            }
+        }
+
+        // Cargar datos automáticamente al abrir la página
+        window.onload = actualizarDatos;
+    </script>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Lecturas de la Estación Meteorológica</h1>
+        <div id="datos">Cargando datos...</div>
+        <button class="recargar" onclick="actualizarDatos()">Actualizar Datos</button>
+    </div>
+</body>
+</html>
