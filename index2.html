@@ -1,74 +1,39 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style2.css">
     <title>Lectura de sensores</title>
-</head>
-<body>
-    <header>
-        <a href="index.html" class="logo">Renova Tec</a> 
-
-        <nav>
-            <a href="index.html" class="active"> Inicio </a>
-
-            <a href="mailto: renovatec00@gmail.com?subject=Asunto%20del%20mensaje&body=Contenido%20del%20mensaje">Contacto</a>
-        </nav>
-    </header>
-    <section class="home">
-        <div class="home-img">
-            <img src="main.jpg" alt="">
-        </div>
-    
-            
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Previsualización</title>
     <style>
         iframe {
-            width: 120%;
+            width: 100%; /* Cambiado a 100% para que se ajuste al contenedor */
             height: 500px; /* Ajusta la altura según sea necesario */
             border: 1px solid #ccc;
+            margin-bottom: 20px; /* Espacio entre iframes */
         }
     </style>
 </head>
 <body>
-
-<h1>Listado de sensores</h1>
-<iframe src="http://localhost/renovatec/index.php" title="Previsualización"></iframe>
-</body>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Previsualización</title>
-  <style>
-      iframe {
-          width: 120%;
-          height: 500px; /* Ajusta la altura según sea necesario */
-          border: 1px solid #ccc;
-      }
-  </style>
-</head>
-<body>
-
-<h1>Lecturas en tiempo real</h1>
-<iframe src="http://localhost/renovatec/inicio.php?controller=lectura&action=list" title="Previsualización"></iframe>
-
-</body>
-                
-              
- 
-
-            </div>
-            
-        </div>
-    </section>
+    <header>
+        <a href="index.html" class="logo">Renova Tec</a> 
+        <nav>
+            <a href="index.html" class="active"> Inicio </a>
+            <a href="mailto: renovatec00@gmail.com?subject=Asunto%20del%20mensaje&body=Contenido%20del%20mensaje">Contacto</a>
+        </nav>
+    </header>
     
+    <section class="home">
+        <div class="home-img">
+            <img src="main.jpg" alt="">
+        </div>
+        
+        <h1>Listado de sensores</h1>
+        <iframe src="http://localhost/renovatec/index.php" title="Previsualización"></iframe>
+        
+        <h1>Lecturas en tiempo real</h1>
+        <iframe src="http://localhost/renovatec/inicio.php?controller=lectura&action=list" title="Previsualización"></iframe>
+    </section>
 </body>
 </html>
