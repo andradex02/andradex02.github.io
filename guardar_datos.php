@@ -1,34 +1,31 @@
 <?php
-// Configuración para la conexión a la base de datos
-require_once 'config/db.php';  // Asegúrate de que el archivo de conexión esté en la carpeta correcta
+require_once 'config/db.php';
 
-// Crear la conexión
-$db = new DB();
-$conn = $db->conectar();
+if (isset($_GET['temp']) && isset($_GET['hum']) && isset($_GET['viento']) && isset($_GET['lluvia'])) {
+    // Obtener los datos del GET
+    $temp = $_GET['temp'];
+    $hum = $_GET['hum'];
+    $viento = $_GET['viento'];
+    $lluvia = $_GET['lluvia'];
+    $fecha = date("Y-m-d H:i:s"); // Fecha actual
 
-// Verificar si la conexión fue exitosa
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+    // Crear la conexión a la base de datos
+    $db = new DB();
+    $conn = $db->conectar();
 
-// Obtener los últimos 10 registros de la base de datos
-$sql = "SELECT * FROM datos_clima ORDER BY fecha DESC LIMIT 10";
-$resultado = $conn->query($sql);
+    // Insertar los datos en la base de datos
+    $sql = "INSERT INTO datos_clima (fecha, temperatura, humedad, viento, lluvia) 
+            VALUES ('$fecha', '$temp', '$hum', '$viento', '$lluvia')";
 
-// Comprobar si hay datos
-if ($resultado->num_rows > 0) {
-    // Mostrar los datos
-    while($row = $resultado->fetch_assoc()) {
-        echo "<p>Fecha: " . $row["fecha"] . "</p>";
-        echo "<p>Temperatura: " . $row["temperatura"] . "°C</p>";
-        echo "<p>Humedad: " . $row["humedad"] . "%</p>";
-        echo "<p>Viento: " . $row["viento"] . " km/h</p>";
-        echo "<p>Lluvia: " . $row["lluvia"] . " mm</p><hr>";
+    if ($conn->query($sql) === TRUE) {
+        echo "Datos recibidos correctamente.";
+    } else {
+        echo "Error al insertar los datos: " . $conn->error;
     }
-} else {
-    echo "No hay datos disponibles.";
-}
 
-// Cerrar la conexión
-$conn->close();
+    // Cerrar la conexión
+    $conn->close();
+} else {
+    echo "Datos faltantes.";
+}
 ?>
