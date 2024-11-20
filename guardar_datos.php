@@ -1,32 +1,34 @@
 <?php
-require_once 'config/db.php';  // Asegúrate de tener la configuración de la base de datos en este archivo
+// Configuración para la conexión a la base de datos
+require_once 'config/db.php';  // Asegúrate de que el archivo de conexión esté en la carpeta correcta
 
-// Conexión a la base de datos
+// Crear la conexión
 $db = new DB();
-$conexion = $db->conectar();
+$conn = $db->conectar();
 
-// Verificar si los datos están presentes en la solicitud POST
-if (isset($_POST['temp']) && isset($_POST['hum']) && isset($_POST['viento']) && isset($_POST['lluvia'])) {
-    $temp = $_POST['temp'];
-    $hum = $_POST['hum'];
-    $viento = $_POST['viento'];
-    $lluvia = $_POST['lluvia'];
-
-    // Insertar los datos en la base de datos
-    $query = "INSERT INTO sensores (temperatura, humedad, viento, lluvia) VALUES (?, ?, ?, ?)";
-    $stmt = $conexion->prepare($query);
-    $stmt->bind_param("dddd", $temp, $hum, $viento, $lluvia);
-
-    if ($stmt->execute()) {
-        echo "Datos guardados correctamente.";
-    } else {
-        echo "Error al guardar los datos: " . $stmt->error;
-    }
-
-    $stmt->close();
-} else {
-    echo "Faltan datos para guardar.";
+// Verificar si la conexión fue exitosa
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
-$conexion->close();
+// Obtener los últimos 10 registros de la base de datos
+$sql = "SELECT * FROM datos_clima ORDER BY fecha DESC LIMIT 10";
+$resultado = $conn->query($sql);
+
+// Comprobar si hay datos
+if ($resultado->num_rows > 0) {
+    // Mostrar los datos
+    while($row = $resultado->fetch_assoc()) {
+        echo "<p>Fecha: " . $row["fecha"] . "</p>";
+        echo "<p>Temperatura: " . $row["temperatura"] . "°C</p>";
+        echo "<p>Humedad: " . $row["humedad"] . "%</p>";
+        echo "<p>Viento: " . $row["viento"] . " km/h</p>";
+        echo "<p>Lluvia: " . $row["lluvia"] . " mm</p><hr>";
+    }
+} else {
+    echo "No hay datos disponibles.";
+}
+
+// Cerrar la conexión
+$conn->close();
 ?>
