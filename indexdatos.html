@@ -41,7 +41,10 @@
     <script>
         async function actualizarDatos() {
             try {
+                // Realiza una petición a guardar_datos.php para obtener los datos de los sensores
                 const response = await fetch("guardar_datos.php");
+                
+                // Si la petición es exitosa, se actualizan los datos en el HTML
                 const data = await response.text();
                 document.getElementById("datos").innerHTML = data;
             } catch (error) {
@@ -50,7 +53,7 @@
             }
         }
 
-        // Cargar datos automáticamente al abrir la página
+        // Cargar los datos automáticamente al abrir la página
         window.onload = actualizarDatos;
     </script>
 </head>
@@ -62,3 +65,4 @@
     </div>
 </body>
 </html>
+
