@@ -5,51 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style2.css">
-    <title>Lectura de sensores</title>
-    <style>
-        iframe {
-            width: 120%;
-            height: 700px;
-            border: 1px solid #ccc;
-            margin-bottom: 20px;
-        }
-    </style>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Previsualización</title>
-    <style>
-        iframe {
-            width: 100%;
-            height: 600px; /* Ajusta la altura según sea necesario */
-            border: 1px solid #ccc;
-        }
-    </style>
+    <title>Renova tec</title>
 </head>
 <body>
-
-<h1>Listado de sensores</h1>
-<iframe src="http://localhost/renovatec/index.php" title="Previsualización"></iframe>
-</body>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Previsualización</title>
-  <style>
-      iframe {
-          width: 100%;
-          height: 600px; /* Ajusta la altura según sea necesario */
-          border: 1px solid #ccc;
-      }
-  </style>
-</head>
-<body>
-
-<h1>Lecturas en tiempo real</h1>
-<iframe src="http://localhost/renovatec/inicio.php?controller=lectura&action=list" title="Previsualización"></iframe>
-
-</body>
+    <header>
+        <a href="#" class="logo">Renova Tec</a>
+        <nav>
+            <a href="index.html" class="active">Inicio</a>
+            <a href="#">Servicios</a>
+            <a href="#">Habilidades</a>
+            <a href="#">Educación</a>
+            <a href="#">Experiencia</a>
+            <a href="mailto: renovatec00@gmail.com?subject=Asunto%20del%20mensaje&body=Contenido%20del%20mensaje">Contacto</a>
+        </nav>
+    </header>
+   
+    
+    <!-- Sección de sensores -->
+    <section class="sensor-data">
+        <div class="container">
+            <h1>Huerta GAIA resultado en tiempo real</h1>
+            <table id="sensorTable">
+                <thead>
+                    <tr>
+                        <th>Planta</th>
+                        <th>Hora</th>
+                        <th>Temperatura (°C)</th>
+                        <th>Calidad del Aire</th>
+                        <th>Humedad del Suelo (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se insertarán los datos dinámicamente -->
+                </tbody>
+            </table>
+        </div>
     </section>
+
+    <script>
+     function updateTable() {
+    fetch('random_data.php') // Llama al archivo PHP que genera los datos
+        .then(response => response.json()) // Convierte la respuesta en JSON
+        .then(sensorData => {
+            const tableBody = document.querySelector('#sensorTable tbody');
+            tableBody.innerHTML = ''; // Limpiar tabla antes de actualizar
+
+            // Crear filas dinámicamente para las 3 plantas
+            for (let i = 0; i < sensorData.plantas.length; i++) {
+                const row = document.createElement('tr');
+                const plantCell = document.createElement('td');
+                const timeCell = document.createElement('td');
+                const tempCell = document.createElement('td');
+                const airCell = document.createElement('td');
+                const soilCell = document.createElement('td');
+
+                // Insertar datos en las celdas de la tabla
+                plantCell.textContent = sensorData.plantas[i]; // Planta
+                timeCell.textContent = sensorData.labels[i];   // Hora
+                tempCell.textContent = sensorData.temperaturas[i].toFixed(2); // Temperatura
+                airCell.textContent = sensorData.calidad_aire[i].toFixed(2); // Calidad del aire
+                soilCell.textContent = sensorData.humedad_suelo[i].toFixed(2); // Humedad del suelo
+
+                row.appendChild(plantCell);
+                row.appendChild(timeCell);
+                row.appendChild(tempCell);
+                row.appendChild(airCell);
+                row.appendChild(soilCell);
+                tableBody.appendChild(row);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// Llamar a la función al cargar la página
+updateTable();
+
+// Configurar actualización automática cada 60 segundos
+setInterval(updateTable, 60000);
+</script>
+    <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#"><i class="fa-brands fa-github"></i></a>
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-gmail"></i></a>
+    </div>
 </body>
 </html>
